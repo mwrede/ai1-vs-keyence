@@ -749,6 +749,7 @@
             position: relative;
             z-index: 1;
             padding: 6rem 2rem;
+            overflow-x: hidden;
         }
 
         .standoffs-header {
@@ -964,8 +965,19 @@
             .panel-side p { font-size: 0.75rem; }
             .panel-stat { font-size: 0.85rem; }
             .panel-vs { padding: 0 0.5rem; font-size: 1rem; }
-            .standoff-buttons { grid-template-columns: repeat(3, 1fr); }
-            .standoff-btn { min-width: auto; padding: 0.75rem 1rem; }
+            .standoff-buttons { grid-template-columns: repeat(2, 1fr); gap: 0.5rem; padding: 0 0.5rem; }
+            .standoff-btn { min-width: 0; padding: 0.6rem 0.4rem; }
+            .standoff-icon { font-size: 1.4rem; }
+            .standoff-label { font-size: 0.65rem; }
+            .standoff-wip { font-size: 0.45rem; padding: 0.1rem 0.3rem; }
+            .standoffs { padding: 4rem 0.5rem; }
+        }
+
+        @media (max-width: 400px) {
+            .standoff-buttons { grid-template-columns: repeat(2, 1fr); gap: 0.4rem; }
+            .standoff-btn { padding: 0.5rem 0.3rem; }
+            .standoff-icon { font-size: 1.2rem; }
+            .standoff-label { font-size: 0.6rem; }
         }
 
         /* Video WIP banner */
