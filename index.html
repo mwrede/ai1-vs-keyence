@@ -1878,7 +1878,7 @@
         <div class="standoffs-header">
             <div class="section-label">// Head-to-Head Standoffs</div>
             <h2>Choose Your Battle</h2>
-            <p class="standoffs-sub" id="typewriter-text"></p>
+            <p class="standoffs-sub" id="typewriter-text">Talk is cheap. Let us show you.</p>
         </div>
 
         <div class="standoff-buttons">
@@ -2612,6 +2612,7 @@
         function startTypewriter() {
             if (typewriterStarted) return;
             typewriterStarted = true;
+            typewriterEl.textContent = '';
             let i = 0;
             typewriterEl.style.borderRight = '2px solid var(--accent-purple)';
             const interval = setInterval(() => {
