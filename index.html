@@ -952,6 +952,28 @@
             .standoff-btn { min-width: auto; padding: 0.75rem 1rem; }
         }
 
+        /* Video WIP banner */
+        .video-wip {
+            margin-top: 1.5rem;
+            padding: 2rem;
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent-cyan);
+            border: 2px dashed rgba(0, 212, 255, 0.25);
+            border-radius: 10px;
+            background: rgba(0, 212, 255, 0.03);
+            animation: wip-pulse 3s ease-in-out infinite;
+        }
+
+        @keyframes wip-pulse {
+            0%, 100% { border-color: rgba(0, 212, 255, 0.25); }
+            50% { border-color: rgba(0, 212, 255, 0.5); }
+        }
+
         /* ═══════════════════════════════════════════
            COMPARISON TABLE
            ═══════════════════════════════════════════ */
@@ -1822,6 +1844,7 @@
                         <p>Run OCR models directly on-device. Read serial numbers, date codes, lot numbers, barcodes, handwriting — anything. Deploy custom-trained text recognition models or use pre-built ones from Roboflow Universe.</p>
                     </div>
                 </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
             </div>
 
             <div class="standoff-panel" id="standoff-classes">
@@ -1840,6 +1863,7 @@
                         <p>Train models with hundreds of classes. Detect, classify, and segment multiple object types simultaneously. Distinguish between scratch, dent, crack, discoloration — all in a single model running at 30 FPS.</p>
                     </div>
                 </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
             </div>
 
             <div class="standoff-panel" id="standoff-speed">
@@ -1858,6 +1882,7 @@
                         <p>Global shutter captures the entire frame simultaneously — zero motion blur, even on high-speed lines. Combined with 15-30 FPS inference on the Jetson Orin NX, you get crisp, real-time results without external triggering hardware.</p>
                     </div>
                 </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
             </div>
 
             <div class="standoff-panel" id="standoff-width">
@@ -1876,6 +1901,7 @@
                         <p>Connect multiple cameras to a single AI1 device via RTSP or USB. Stitch feeds together for panoramic coverage. One device, one brain, unlimited field of view — at a fraction of the cost.</p>
                     </div>
                 </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
             </div>
 
             <div class="standoff-panel" id="standoff-location">
@@ -1894,6 +1920,7 @@
                         <p>Every detection comes with bounding boxes, segmentation masks, and confidence scores. Know exactly where every object, defect, or anomaly is — down to the pixel. Feed coordinates directly to PLCs and robotic arms.</p>
                     </div>
                 </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
             </div>
 
             <div class="standoff-panel" id="standoff-defects">
@@ -1912,6 +1939,7 @@
                         <p>Train models that identify, classify, and grade defects by type and severity. Scratch vs dent vs crack vs stain — each with confidence scores. Set custom thresholds per defect type. Active learning continuously improves accuracy from production data.</p>
                     </div>
                 </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
             </div>
 
         </div>
