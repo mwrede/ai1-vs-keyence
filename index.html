@@ -780,9 +780,9 @@
         /* Buttons row */
         .standoff-buttons {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
-            gap: 0.75rem;
-            max-width: 1200px;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            max-width: 900px;
             margin: 0 auto 3rem;
         }
 
@@ -961,7 +961,7 @@
         @media (max-width: 768px) {
             .panel-grid { grid-template-columns: 1fr; }
             .panel-vs { padding: 0.5rem 0; }
-            .standoff-buttons { grid-template-columns: repeat(3, 1fr); }
+            .standoff-buttons { grid-template-columns: repeat(2, 1fr); }
             .standoff-btn { min-width: auto; padding: 0.75rem 1rem; }
         }
 
@@ -1842,11 +1842,6 @@
                 <span class="standoff-label">Defects</span>
                 <span class="standoff-wip">Video WIP</span>
             </button>
-            <button class="standoff-btn" data-target="standoff-beltspeed">
-                <span class="standoff-icon">&#8644;</span>
-                <span class="standoff-label">Belt Speed</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
             <button class="standoff-btn" data-target="standoff-lighting">
                 <span class="standoff-icon">&#9728;</span>
                 <span class="standoff-label">Lighting</span>
@@ -1986,24 +1981,6 @@
                 <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
             </div>
 
-            <div class="standoff-panel" id="standoff-beltspeed">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">Rolling Shutter Tap-Out</div>
-                        <p>Put parts on a belt or spinner and crank the speed. The IV4's rolling shutter distorts fast-moving objects — skewing edges, stretching shapes, and producing unusable frames. At high line speeds, it literally can't keep up. The sensor taps out before your production line does.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Global Shutter, No Blur</div>
-                        <p>The AI1's global shutter captures every pixel simultaneously — no distortion, no skew, no matter how fast the belt runs. Pair that with 15-30 FPS inference and you get crisp, accurate detections at production speed. We don't tap out.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
 
             <div class="standoff-panel" id="standoff-lighting">
                 <div class="panel-grid">
