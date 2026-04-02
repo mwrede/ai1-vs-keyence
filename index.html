@@ -1808,7 +1808,7 @@
         <div class="standoffs-header">
             <div class="section-label">// Head-to-Head Standoffs</div>
             <h2>Choose Your Battle</h2>
-            <p class="standoffs-sub">Click a category to see who wins.</p>
+            <p class="standoffs-sub" id="typewriter-text"></p>
         </div>
 
         <div class="standoff-buttons">
@@ -2530,6 +2530,65 @@
                 document.getElementById(target).classList.add('active');
             });
         });
+
+        // Typewriter sound using Web Audio API
+        function playTypeClick() {
+            const ctx = new (window.AudioContext || window.webkitAudioContext)();
+            // Short noise burst for key click
+            const bufferSize = ctx.sampleRate * 0.015;
+            const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+            const data = buffer.getChannelData(0);
+            for (let i = 0; i < bufferSize; i++) {
+                data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 8);
+            }
+            const source = ctx.createBufferSource();
+            source.buffer = buffer;
+            // Bandpass to make it sound mechanical
+            const filter = ctx.createBiquadFilter();
+            filter.type = 'bandpass';
+            filter.frequency.value = 3000 + Math.random() * 2000;
+            filter.Q.value = 2;
+            const gain = ctx.createGain();
+            gain.gain.value = 0.08 + Math.random() * 0.04;
+            source.connect(filter);
+            filter.connect(gain);
+            gain.connect(ctx.destination);
+            source.start();
+            source.stop(ctx.currentTime + 0.02);
+        }
+
+        // Typewriter effect for standoffs subtitle
+        const typewriterEl = document.getElementById('typewriter-text');
+        const typewriterText = 'Talk is cheap. Let us show you.';
+        let typewriterStarted = false;
+        const typewriterObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && !typewriterStarted) {
+                    typewriterStarted = true;
+                    let i = 0;
+                    typewriterEl.style.borderRight = '2px solid var(--accent-purple)';
+                    const interval = setInterval(() => {
+                        typewriterEl.textContent = typewriterText.slice(0, i + 1);
+                        if (typewriterText[i] !== ' ') playTypeClick();
+                        i++;
+                        if (i >= typewriterText.length) {
+                            clearInterval(interval);
+                            // Blink cursor a few times then remove
+                            let blinks = 0;
+                            const blinkInterval = setInterval(() => {
+                                typewriterEl.style.borderRight = blinks % 2 === 0 ? '2px solid transparent' : '2px solid var(--accent-purple)';
+                                blinks++;
+                                if (blinks > 6) {
+                                    clearInterval(blinkInterval);
+                                    typewriterEl.style.borderRight = 'none';
+                                }
+                            }, 400);
+                        }
+                    }, 60);
+                }
+            });
+        }, { threshold: 0.5 });
+        typewriterObserver.observe(typewriterEl);
 
         // No mouse-follow tilt — hover spin handles the interaction
     </script>
