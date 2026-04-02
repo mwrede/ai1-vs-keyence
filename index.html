@@ -2608,35 +2608,42 @@
         const typewriterEl = document.getElementById('typewriter-text');
         const typewriterText = 'Talk is cheap. Let us show you.';
         let typewriterStarted = false;
-        const standoffsHeader = document.querySelector('.standoffs-header');
+
+        function startTypewriter() {
+            if (typewriterStarted) return;
+            typewriterStarted = true;
+            let i = 0;
+            typewriterEl.style.borderRight = '2px solid var(--accent-purple)';
+            const interval = setInterval(() => {
+                typewriterEl.textContent = typewriterText.slice(0, i + 1);
+                if (typewriterText[i] !== ' ') playTypeClick();
+                i++;
+                if (i >= typewriterText.length) {
+                    clearInterval(interval);
+                    let blinks = 0;
+                    const blinkInterval = setInterval(() => {
+                        typewriterEl.style.borderRight = blinks % 2 === 0 ? '2px solid transparent' : '2px solid var(--accent-purple)';
+                        blinks++;
+                        if (blinks > 6) {
+                            clearInterval(blinkInterval);
+                            typewriterEl.style.borderRight = 'none';
+                        }
+                    }, 400);
+                }
+            }, 60);
+        }
+
+        // Watch the whole standoffs section
+        const standoffsSection = document.querySelector('.standoffs');
         const typewriterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting && !typewriterStarted) {
-                    typewriterStarted = true;
-                    let i = 0;
-                    typewriterEl.style.borderRight = '2px solid var(--accent-purple)';
-                    const interval = setInterval(() => {
-                        typewriterEl.textContent = typewriterText.slice(0, i + 1);
-                        if (typewriterText[i] !== ' ') playTypeClick();
-                        i++;
-                        if (i >= typewriterText.length) {
-                            clearInterval(interval);
-                            // Blink cursor a few times then remove
-                            let blinks = 0;
-                            const blinkInterval = setInterval(() => {
-                                typewriterEl.style.borderRight = blinks % 2 === 0 ? '2px solid transparent' : '2px solid var(--accent-purple)';
-                                blinks++;
-                                if (blinks > 6) {
-                                    clearInterval(blinkInterval);
-                                    typewriterEl.style.borderRight = 'none';
-                                }
-                            }, 400);
-                        }
-                    }, 60);
+                if (entry.isIntersecting) {
+                    // Delay so fade-in animation completes first
+                    setTimeout(startTypewriter, 800);
                 }
             });
-        }, { threshold: 0.1 });
-        typewriterObserver.observe(standoffsHeader);
+        }, { threshold: 0.05 });
+        typewriterObserver.observe(standoffsSection);
 
         // No mouse-follow tilt — hover spin handles the interaction
     </script>
