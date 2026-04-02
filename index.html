@@ -1311,9 +1311,9 @@
                 gap: 0.3rem;
             }
             .vs-badge {
-                width: 32px;
-                height: 32px;
-                font-size: 0.7rem;
+                width: 28px;
+                height: 28px;
+                font-size: 0.6rem;
                 border-width: 1px;
                 box-shadow: none;
             }
@@ -1324,20 +1324,40 @@
             .product-card { border-radius: 6px; }
             .product-card.challenger { border-width: 2px; }
             .product-card.challenger::before { display: none; }
-            .card-header { padding: 0.4rem 0.5rem; }
-            .product-name { font-size: 0.75rem !important; }
-            .tag { font-size: 0.4rem; padding: 0.1rem 0.3rem; }
 
-            /* Camera images — big and prominent */
-            .product-visual { height: 200px; }
-            .product-visual img { max-height: 170px !important; max-width: 90% !important; }
+            /* Header — centered name, no tags */
+            .card-header {
+                padding: 0.5rem;
+                justify-content: center !important;
+            }
+            .card-header .tag { display: none; }
+            .product-name {
+                font-size: 0.85rem !important;
+                text-align: center;
+                width: 100%;
+            }
 
-            /* Specs — show only first 3 items */
-            .specs-list { padding: 0.3rem 0.5rem; }
-            .specs-list li { padding: 0.2rem 0; font-size: 0.55rem; }
+            /* Camera images — LARGE and prominent */
+            .product-visual { height: 240px; }
+            .product-visual img { max-height: 210px !important; max-width: 95% !important; }
+
+            /* Specs — clean, show first 3 */
+            .specs-list { padding: 0.4rem 0.5rem; }
+            .specs-list li {
+                padding: 0.25rem 0;
+                font-size: 0.55rem;
+                display: flex;
+                flex-direction: column;
+                gap: 0.05rem;
+            }
             .specs-list li:nth-child(n+4) { display: none; }
-            .spec-label { font-size: 0.5rem !important; }
-            .spec-value { font-size: 0.5rem !important; }
+            .spec-label {
+                font-size: 0.5rem !important;
+                font-weight: 700;
+            }
+            .spec-value {
+                font-size: 0.55rem !important;
+            }
 
             .why-grid { grid-template-columns: 1fr; }
             .metrics-inner { grid-template-columns: repeat(2, 1fr); }
