@@ -782,7 +782,7 @@
             display: grid;
             grid-template-columns: repeat(6, 1fr);
             gap: 0.75rem;
-            max-width: 1100px;
+            max-width: 1200px;
             margin: 0 auto 3rem;
         }
 
@@ -830,6 +830,19 @@
             font-weight: 600;
             text-transform: uppercase;
             letter-spacing: 0.08em;
+        }
+
+        .standoff-wip {
+            font-size: 0.55rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--accent-orange);
+            background: rgba(255, 136, 68, 0.1);
+            border: 1px solid rgba(255, 136, 68, 0.3);
+            padding: 0.15rem 0.5rem;
+            border-radius: 4px;
+            margin-top: 0.2rem;
         }
 
         /* Panels */
@@ -1802,26 +1815,62 @@
             <button class="standoff-btn active" data-target="standoff-ocr">
                 <span class="standoff-icon">A</span>
                 <span class="standoff-label">OCR</span>
+                <span class="standoff-wip">Video WIP</span>
             </button>
             <button class="standoff-btn" data-target="standoff-classes">
                 <span class="standoff-icon">#</span>
                 <span class="standoff-label"># of Classes</span>
+                <span class="standoff-wip">Video WIP</span>
             </button>
             <button class="standoff-btn" data-target="standoff-speed">
                 <span class="standoff-icon">&raquo;</span>
                 <span class="standoff-label">Shutter / Speed</span>
+                <span class="standoff-wip">Video WIP</span>
             </button>
             <button class="standoff-btn" data-target="standoff-width">
                 <span class="standoff-icon">&harr;</span>
                 <span class="standoff-label">Width</span>
+                <span class="standoff-wip">Video WIP</span>
             </button>
             <button class="standoff-btn" data-target="standoff-location">
                 <span class="standoff-icon">&#9678;</span>
                 <span class="standoff-label">Location</span>
+                <span class="standoff-wip">Video WIP</span>
             </button>
             <button class="standoff-btn" data-target="standoff-defects">
                 <span class="standoff-icon">&#9888;</span>
                 <span class="standoff-label">Defects</span>
+                <span class="standoff-wip">Video WIP</span>
+            </button>
+            <button class="standoff-btn" data-target="standoff-beltspeed">
+                <span class="standoff-icon">&#8644;</span>
+                <span class="standoff-label">Belt Speed</span>
+                <span class="standoff-wip">Video WIP</span>
+            </button>
+            <button class="standoff-btn" data-target="standoff-lighting">
+                <span class="standoff-icon">&#9728;</span>
+                <span class="standoff-label">Lighting</span>
+                <span class="standoff-wip">Video WIP</span>
+            </button>
+            <button class="standoff-btn" data-target="standoff-orientation">
+                <span class="standoff-icon">&#8635;</span>
+                <span class="standoff-label">Orientation</span>
+                <span class="standoff-wip">Video WIP</span>
+            </button>
+            <button class="standoff-btn" data-target="standoff-oob">
+                <span class="standoff-icon">&#9760;</span>
+                <span class="standoff-label">Out-of-Band</span>
+                <span class="standoff-wip">Video WIP</span>
+            </button>
+            <button class="standoff-btn" data-target="standoff-textures">
+                <span class="standoff-icon">&#9638;</span>
+                <span class="standoff-label">Textures</span>
+                <span class="standoff-wip">Video WIP</span>
+            </button>
+            <button class="standoff-btn" data-target="standoff-distance">
+                <span class="standoff-icon">&#8982;</span>
+                <span class="standoff-label">Distance / Focus</span>
+                <span class="standoff-wip">Video WIP</span>
             </button>
         </div>
 
@@ -1937,6 +1986,120 @@
                         <div class="panel-verdict-tag win">&#10003; WINS</div>
                         <div class="panel-stat">Smart Defect Classification</div>
                         <p>Train models that identify, classify, and grade defects by type and severity. Scratch vs dent vs crack vs stain — each with confidence scores. Set custom thresholds per defect type. Active learning continuously improves accuracy from production data.</p>
+                    </div>
+                </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
+            </div>
+
+            <div class="standoff-panel" id="standoff-beltspeed">
+                <div class="panel-grid">
+                    <div class="panel-side loser">
+                        <div class="panel-brand">KEYENCE IV4</div>
+                        <div class="panel-verdict-tag">&#10007; LOSES</div>
+                        <div class="panel-stat">Rolling Shutter Tap-Out</div>
+                        <p>Put parts on a belt or spinner and crank the speed. The IV4's rolling shutter distorts fast-moving objects — skewing edges, stretching shapes, and producing unusable frames. At high line speeds, it literally can't keep up. The sensor taps out before your production line does.</p>
+                    </div>
+                    <div class="panel-vs">VS</div>
+                    <div class="panel-side winner">
+                        <div class="panel-brand">ROBOFLOW AI1</div>
+                        <div class="panel-verdict-tag win">&#10003; WINS</div>
+                        <div class="panel-stat">Global Shutter, No Blur</div>
+                        <p>The AI1's global shutter captures every pixel simultaneously — no distortion, no skew, no matter how fast the belt runs. Pair that with 15-30 FPS inference and you get crisp, accurate detections at production speed. We don't tap out.</p>
+                    </div>
+                </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
+            </div>
+
+            <div class="standoff-panel" id="standoff-lighting">
+                <div class="panel-grid">
+                    <div class="panel-side loser">
+                        <div class="panel-brand">KEYENCE IV4</div>
+                        <div class="panel-verdict-tag">&#10007; LOSES</div>
+                        <div class="panel-stat">Lighting Dependent</div>
+                        <p>The IV4 has built-in illumination, but it's tuned for controlled environments. Throw in low light, harsh glare, mixed lighting, or shadows from overhead fixtures and the sensor struggles. Image quality degrades, and so do your detection results. You end up building light enclosures to babysit the camera.</p>
+                    </div>
+                    <div class="panel-vs">VS</div>
+                    <div class="panel-side winner">
+                        <div class="panel-brand">ROBOFLOW AI1</div>
+                        <div class="panel-verdict-tag win">&#10003; WINS</div>
+                        <div class="panel-stat">AI-Robust + Built-in LEDs</div>
+                        <p>The AI1 has integrated LED illumination for consistent lighting, but more importantly — deep learning models are inherently more robust to lighting variation. Train with augmented data (brightness, contrast, glare) and the model adapts. Low light? Glare? Shifting sunlight? The AI handles what rigid sensors can't.</p>
+                    </div>
+                </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
+            </div>
+
+            <div class="standoff-panel" id="standoff-orientation">
+                <div class="panel-grid">
+                    <div class="panel-side loser">
+                        <div class="panel-brand">KEYENCE IV4</div>
+                        <div class="panel-verdict-tag">&#10007; LOSES</div>
+                        <div class="panel-stat">Orientation Fragile</div>
+                        <p>The IV4 compares incoming images to reference images. Rotate the part 15 degrees? Different angle on the conveyor? Upside down? The sensor panics. It was trained on a specific orientation and anything outside that narrow window gets flagged or missed entirely. Operators end up adding mechanical fixtures just to keep parts aligned for the camera.</p>
+                    </div>
+                    <div class="panel-vs">VS</div>
+                    <div class="panel-side winner">
+                        <div class="panel-brand">ROBOFLOW AI1</div>
+                        <div class="panel-verdict-tag win">&#10003; WINS</div>
+                        <div class="panel-stat">Rotation Invariant</div>
+                        <p>Deep learning models trained with rotation augmentation detect objects in any orientation — flipped, tilted, rotated, upside down. The AI1 doesn't need parts to be perfectly aligned. It learns what the object looks like from every angle, not just one. No fixtures, no mechanical alignment, no fragility.</p>
+                    </div>
+                </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
+            </div>
+
+            <div class="standoff-panel" id="standoff-oob">
+                <div class="panel-grid">
+                    <div class="panel-side loser">
+                        <div class="panel-brand">KEYENCE IV4</div>
+                        <div class="panel-verdict-tag">&#10007; LOSES</div>
+                        <div class="panel-stat">Blind to the Unexpected</div>
+                        <p>This is the IV4's dirty secret. It learns "expected failures" — missing cap, wrong label, absent component. But show it something catastrophically different — a mangled bottle, a crushed package, a completely wrong part — and it doesn't know what to do. It's checking for the cap it was trained on, not recognizing that the entire bottle is destroyed. Catastrophic defects slip through because they don't match any learned failure pattern.</p>
+                    </div>
+                    <div class="panel-vs">VS</div>
+                    <div class="panel-side winner">
+                        <div class="panel-brand">ROBOFLOW AI1</div>
+                        <div class="panel-verdict-tag win">&#10003; WINS</div>
+                        <div class="panel-stat">Catches What You Didn't Train For</div>
+                        <p>Object detection and segmentation models on the AI1 understand the whole scene — not just predefined failure modes. A mangled bottle doesn't look like any "OK" class, so it gets flagged. Anomaly detection workflows catch out-of-distribution inputs automatically. And with active learning, every new weird failure gets captured, labeled, and folded back into the model. The system gets smarter from surprises.</p>
+                    </div>
+                </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
+            </div>
+
+            <div class="standoff-panel" id="standoff-textures">
+                <div class="panel-grid">
+                    <div class="panel-side loser">
+                        <div class="panel-brand">KEYENCE IV4</div>
+                        <div class="panel-verdict-tag">&#10007; LOSES</div>
+                        <div class="panel-stat">Texture Blind</div>
+                        <p>Rips, wrinkles, surface scratches, weld bead irregularities — these are subtle texture defects that require understanding surfaces, not just shapes. The IV4's difference-checking approach struggles here. A wrinkle on packaging might not look "different enough" from the reference. A bad weld bead might pass because the overall part shape is correct. Texture analysis requires real computer vision, not pixel comparison.</p>
+                    </div>
+                    <div class="panel-vs">VS</div>
+                    <div class="panel-side winner">
+                        <div class="panel-brand">ROBOFLOW AI1</div>
+                        <div class="panel-verdict-tag win">&#10003; WINS</div>
+                        <div class="panel-stat">Deep Texture Understanding</div>
+                        <p>Convolutional neural networks excel at texture recognition — it's what they were built for. Train the AI1 to detect rips in fabric, wrinkles in packaging, porosity in welds, surface roughness on machined parts. Instance segmentation can outline the exact defect boundary. Weld inspection? Train on good vs bad bead profiles and the model learns the difference between acceptable variation and true defects.</p>
+                    </div>
+                </div>
+                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
+            </div>
+
+            <div class="standoff-panel" id="standoff-distance">
+                <div class="panel-grid">
+                    <div class="panel-side loser">
+                        <div class="panel-brand">KEYENCE IV4</div>
+                        <div class="panel-verdict-tag">&#10007; LOSES</div>
+                        <div class="panel-stat">50–3000mm, Fixed Lens</div>
+                        <p>The IV4 supports 50–3000mm installation distance, but the lens is fixed at purchase. Choose wrong and you're buying a new sensor head. At longer distances, resolution drops and small defect detection suffers. The all-in-one design means you can't swap lenses to optimize for your specific use case — you get what Keyence decided to ship.</p>
+                    </div>
+                    <div class="panel-vs">VS</div>
+                    <div class="panel-side winner">
+                        <div class="panel-brand">ROBOFLOW AI1</div>
+                        <div class="panel-verdict-tag win">&#10003; WINS</div>
+                        <div class="panel-stat">Flexible Optics, Any Distance</div>
+                        <p>The AI1 supports interchangeable C/CS-mount lenses — pick the focal length for your exact working distance. Need macro inspection at 50mm? Wide-angle coverage of a full pallet? Telephoto for long-range monitoring? Swap the lens, not the device. Pair with high-resolution Basler cameras for pixel-dense images even at distance, and let the AI handle the rest.</p>
                     </div>
                 </div>
                 <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
@@ -2103,7 +2266,7 @@
         <h2>Ready to upgrade<br>your vision system?</h2>
         <p>See why Fortune 500 manufacturers are switching from legacy sensors to AI-native vision.</p>
         <div class="cta-buttons">
-            <a href="https://roboflow.com/sales" class="btn-primary">Request a Demo &rarr;</a>
+            <a href="https://roboflow.com/sales" class="btn-primary">Buy Now &rarr;</a>
             <a href="https://roboflow.com/hardware" class="btn-secondary">Learn More</a>
         </div>
     </section>
