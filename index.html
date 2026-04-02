@@ -1300,15 +1300,25 @@
            ═══════════════════════════════════════════ */
         @media (max-width: 1024px) {
             .arena {
-                grid-template-columns: 1fr;
-                max-width: 600px;
+                grid-template-columns: 1fr auto 1fr;
+                gap: 0.5rem;
+                padding: 0 0.5rem;
             }
+            .product-card { border-radius: 8px; }
+            .card-header { padding: 0.6rem; }
+            .product-name { font-size: 1rem; }
+            .tag { font-size: 0.5rem; padding: 0.2rem 0.4rem; }
+            .product-visual { height: 180px; }
+            .specs-list { padding: 0.5rem; }
+            .specs-list li { padding: 0.3rem 0; font-size: 0.65rem; }
+            .product-card.challenger::before { font-size: 0.55rem; padding: 0.2rem 0.5rem; }
             .vs-divider {
                 padding-top: 0;
-                flex-direction: row;
-                gap: 1rem;
+                flex-direction: column;
+                gap: 0.5rem;
             }
-            .vs-line { width: 100px; height: 1px; background: linear-gradient(to right, transparent, rgba(255, 68, 102, 0.3), transparent); }
+            .vs-text { font-size: 1.2rem; }
+            .vs-line { width: 1px; height: 60px; background: linear-gradient(to bottom, transparent, rgba(255, 68, 102, 0.3), transparent); }
             .why-grid { grid-template-columns: 1fr; }
             .metrics-inner { grid-template-columns: repeat(2, 1fr); }
         }
