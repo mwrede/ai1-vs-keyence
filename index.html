@@ -775,7 +775,9 @@
 
         .standoffs-sub {
             color: var(--text-secondary);
-            font-size: 1rem;
+            font-size: 1.1rem;
+            min-height: 1.5em;
+            padding-right: 3px;
         }
 
         /* Buttons row */
@@ -2606,6 +2608,7 @@
         const typewriterEl = document.getElementById('typewriter-text');
         const typewriterText = 'Talk is cheap. Let us show you.';
         let typewriterStarted = false;
+        const standoffsHeader = document.querySelector('.standoffs-header');
         const typewriterObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting && !typewriterStarted) {
@@ -2632,8 +2635,8 @@
                     }, 60);
                 }
             });
-        }, { threshold: 0.5 });
-        typewriterObserver.observe(typewriterEl);
+        }, { threshold: 0.1 });
+        typewriterObserver.observe(standoffsHeader);
 
         // No mouse-follow tilt — hover spin handles the interaction
     </script>
