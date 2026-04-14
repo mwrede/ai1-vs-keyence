@@ -1111,7 +1111,7 @@
         .blocks-images {
             display: flex;
             gap: 1.5rem;
-            align-items: flex-end;
+            align-items: flex-start;
             overflow-x: auto;
             padding-bottom: 0.5rem;
         }
@@ -1127,7 +1127,7 @@
 
         .block-item img {
             width: 100%;
-            max-height: 280px;
+            height: 300px;
             object-fit: contain;
             border-radius: 8px;
             border: 2px solid var(--border);
@@ -1160,6 +1160,110 @@
             color: var(--accent-orange);
             background: rgba(255, 136, 68, 0.1);
             border: 1px solid rgba(255, 136, 68, 0.3);
+        }
+
+        .keyence-attempt {
+            margin-bottom: 2.5rem;
+        }
+
+        .keyence-attempt h3 {
+            font-family: var(--font-mono);
+            font-size: 1.8rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .attempt-keyence {
+            color: #cc0000;
+        }
+
+        .attempt-videos {
+            display: flex;
+            gap: 1.5rem;
+            justify-content: center;
+        }
+
+        .attempt-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.75rem;
+            flex: 1;
+        }
+
+        .attempt-item video {
+            width: 100%;
+            height: 300px;
+            object-fit: contain;
+            border-radius: 8px;
+            border: 2px solid var(--border);
+            background: #000;
+        }
+
+        .attempt-desc {
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            font-family: var(--font-sans);
+            letter-spacing: 0.02em;
+        }
+
+        @media (max-width: 768px) {
+            .attempt-videos { flex-direction: column; gap: 1rem; }
+            .attempt-item video { height: 200px; }
+        }
+
+        /* Lightbox overlay */
+        .lightbox-overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            z-index: 99999;
+            background: rgba(0, 0, 0, 0.92);
+            backdrop-filter: blur(10px);
+            justify-content: center;
+            align-items: center;
+            cursor: zoom-out;
+        }
+
+        .lightbox-overlay.active {
+            display: flex;
+        }
+
+        .lightbox-overlay img {
+            max-width: 90vw;
+            max-height: 85vh;
+            object-fit: contain;
+            border-radius: 8px;
+            transform: rotate(90deg);
+            transform-origin: center center;
+        }
+
+        .lightbox-close {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 50%;
+            background: rgba(255,255,255,0.1);
+            color: #fff;
+            font-size: 1.2rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .lightbox-close:hover {
+            background: rgba(255,255,255,0.2);
+        }
+
+        .block-item img, .annotated-img-wrap img {
+            cursor: zoom-in;
         }
 
         .blocks-objective {
@@ -1208,7 +1312,7 @@
 
         .annotated-img-wrap img {
             width: 100%;
-            max-height: 350px;
+            height: 300px;
             object-fit: contain;
             border-radius: 8px;
             border: 2px solid var(--accent-green);
@@ -1952,6 +2056,12 @@
     <div class="grid-bg"></div>
     <div class="scanlines"></div>
 
+    <!-- Lightbox -->
+    <div class="lightbox-overlay" id="lightbox">
+        <button class="lightbox-close">&times;</button>
+        <img id="lightbox-img" src="" alt="Enlarged view">
+    </div>
+
     <!-- AUDIO -->
     <audio id="bgMusic" loop preload="auto">
         <source src="images/chariots.mp3" type="audio/mpeg">
@@ -2149,277 +2259,22 @@
         </div>
 
         <div class="standoff-buttons">
-            <button class="standoff-btn active" data-target="standoff-ocr">
-                <span class="standoff-icon">A</span>
-                <span class="standoff-label">OCR</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-classes">
-                <span class="standoff-icon">#</span>
-                <span class="standoff-label"># of Classes</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-speed">
-                <span class="standoff-icon">&raquo;</span>
-                <span class="standoff-label">Speed</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-width">
-                <span class="standoff-icon">&harr;</span>
-                <span class="standoff-label">Width</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-location">
-                <span class="standoff-icon">&#9678;</span>
-                <span class="standoff-label">Location</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-defects">
-                <span class="standoff-icon">&#9888;</span>
-                <span class="standoff-label">Defects</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-lighting">
-                <span class="standoff-icon">&#9728;</span>
-                <span class="standoff-label">Lighting</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-orientation">
-                <span class="standoff-icon">&#8635;</span>
-                <span class="standoff-label">Orientation</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-textures">
+            <button class="standoff-btn active" data-target="standoff-blocks">
                 <span class="standoff-icon">&#9638;</span>
-                <span class="standoff-label">Textures</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-distance">
-                <span class="standoff-icon">&#8982;</span>
-                <span class="standoff-label">Distance / Focus</span>
-                <span class="standoff-wip">Video WIP</span>
+                <span class="standoff-label">Blocks</span>
             </button>
         </div>
 
         <!-- Standoff Panels -->
         <div class="standoff-panels">
 
-            <div class="standoff-panel active" id="standoff-ocr">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">No OCR</div>
-                        <p>The IV4 is a go/no-go sensor. It can tell you if something is present or absent, but it cannot read text, serial numbers, lot codes, or barcodes natively. Need OCR? Buy another device.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Full OCR Pipeline</div>
-                        <p>Run OCR models directly on-device. Read serial numbers, date codes, lot numbers, barcodes, handwriting — anything. Deploy custom-trained text recognition models or use pre-built ones from Roboflow Universe.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-            <div class="standoff-panel" id="standoff-classes">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">1 Class: OK vs NG</div>
-                        <p>Binary pass/fail. That's it. The IV4 can check if a part matches a reference image or doesn't. It cannot distinguish between types of defects, classify multiple product variants, or identify specific objects.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Unlimited Classes</div>
-                        <p>Train models with hundreds of classes. Detect, classify, and segment multiple object types simultaneously. Distinguish between scratch, dent, crack, discoloration — all in a single model running at 30 FPS.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-            <div class="standoff-panel" id="standoff-speed">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">Rolling Shutter</div>
-                        <p>The IV4 uses a rolling shutter sensor. Fast-moving parts on conveyors produce motion blur and distorted images. You'll need external triggers, strobes, and careful timing to compensate — adding cost and complexity.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Global Shutter + 30 FPS</div>
-                        <p>Global shutter captures the entire frame simultaneously — zero motion blur, even on high-speed lines. Combined with 15-30 FPS inference on the Jetson Orin NX, you get crisp, real-time results without external triggering hardware.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-            <div class="standoff-panel" id="standoff-width">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">Fixed FOV per Head</div>
-                        <p>Need wider coverage? Buy another sensor head. The IV4's field of view is locked to the specific model you purchase. Covering a full conveyor width often requires multiple units daisy-chained together.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Multi-Camera Stitching</div>
-                        <p>Connect multiple cameras to a single AI1 device via RTSP or USB. Stitch feeds together for panoramic coverage. One device, one brain, unlimited field of view — at a fraction of the cost.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-            <div class="standoff-panel" id="standoff-location">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">No Localization</div>
-                        <p>The IV4 tells you pass or fail — but not where. If a defect is detected, you don't get coordinates, bounding boxes, or spatial information. Good luck finding the actual problem on a complex assembly.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Pixel-Level Localization</div>
-                        <p>Every detection comes with bounding boxes, segmentation masks, and confidence scores. Know exactly where every object, defect, or anomaly is — down to the pixel. Feed coordinates directly to PLCs and robotic arms.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-            <div class="standoff-panel" id="standoff-defects">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">Difference Detection Only</div>
-                        <p>The IV4 compares images to a reference and flags differences. It can't tell you what the defect is, how severe it is, or categorize it. Every anomaly gets the same response: NG. No nuance, no intelligence.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Smart Defect Classification</div>
-                        <p>Train models that identify, classify, and grade defects by type and severity. Scratch vs dent vs crack vs stain — each with confidence scores. Set custom thresholds per defect type. Active learning continuously improves accuracy from production data.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-
-            <div class="standoff-panel" id="standoff-lighting">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">Lighting Dependent</div>
-                        <p>The IV4 has built-in illumination, but it's tuned for controlled environments. Throw in low light, harsh glare, mixed lighting, or shadows from overhead fixtures and the sensor struggles. Image quality degrades, and so do your detection results. You end up building light enclosures to babysit the camera.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">AI-Robust + Built-in LEDs</div>
-                        <p>The AI1 has integrated LED illumination for consistent lighting, but more importantly — deep learning models are inherently more robust to lighting variation. Train with augmented data (brightness, contrast, glare) and the model adapts. Low light? Glare? Shifting sunlight? The AI handles what rigid sensors can't.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-            <div class="standoff-panel" id="standoff-orientation">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">Orientation Fragile</div>
-                        <p>The IV4 compares incoming images to reference images. Rotate the part 15 degrees? Different angle on the conveyor? Upside down? The sensor panics. It was trained on a specific orientation and anything outside that narrow window gets flagged or missed entirely. Operators end up adding mechanical fixtures just to keep parts aligned for the camera.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Rotation Invariant</div>
-                        <p>Deep learning models trained with rotation augmentation detect objects in any orientation — flipped, tilted, rotated, upside down. The AI1 doesn't need parts to be perfectly aligned. It learns what the object looks like from every angle, not just one. No fixtures, no mechanical alignment, no fragility.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-
-            <div class="standoff-panel" id="standoff-textures">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">Texture Blind</div>
-                        <p>Rips, wrinkles, surface scratches, weld bead irregularities — these are subtle texture defects that require understanding surfaces, not just shapes. The IV4's difference-checking approach struggles here. A wrinkle on packaging might not look "different enough" from the reference. A bad weld bead might pass because the overall part shape is correct. Texture analysis requires real computer vision, not pixel comparison.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Deep Texture Understanding</div>
-                        <p>Convolutional neural networks excel at texture recognition — it's what they were built for. Train the AI1 to detect rips in fabric, wrinkles in packaging, porosity in welds, surface roughness on machined parts. Instance segmentation can outline the exact defect boundary. Weld inspection? Train on good vs bad bead profiles and the model learns the difference between acceptable variation and true defects.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-            <div class="standoff-panel" id="standoff-distance">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">50–3000mm, Fixed Lens</div>
-                        <p>The IV4 supports 50–3000mm installation distance, but the lens is fixed at purchase. Choose wrong and you're buying a new sensor head. At longer distances, resolution drops and small defect detection suffers. The all-in-one design means you can't swap lenses to optimize for your specific use case — you get what Keyence decided to ship.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Flexible Optics, Any Distance</div>
-                        <p>The AI1 supports interchangeable C/CS-mount lenses — pick the focal length for your exact working distance. Need macro inspection at 50mm? Wide-angle coverage of a full pallet? Telephoto for long-range monitoring? Swap the lens, not the device. Pair with high-resolution Basler cameras for pixel-dense images even at distance, and let the AI handle the rest.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
-
-        </div>
-    </section>
-
-    <!-- VARIABILITY SECTION -->
-    <section class="variability fade-up">
-        <div class="variability-header">
-            <div class="section-label">// Variability</div>
-            <h2>Real-World Test Samples</h2>
-        </div>
-
-        <div class="variability-buttons">
-            <button class="variability-btn active" data-target="var-blocks">
-                <span class="variability-icon">&#9638;</span>
-                <span class="variability-label">Blocks</span>
-            </button>
-        </div>
-
-        <div class="variability-panels">
-            <div class="variability-panel active" id="var-blocks">
+            <div class="standoff-panel active" id="standoff-blocks">
                 <div class="blocks-layout">
                     <div class="blocks-objective">
                         <h3>Objective</h3>
-                        <p>Identify properly assembled parts. A <strong>Good</strong> part has <strong>4 small bolts</strong> in each corner and <strong>1 screw in the center</strong>, with <strong>no Roboflow logo</strong> visible on the surface. Parts missing bolts, having the wrong screw, or showing a Roboflow logo are classified as <strong>No Good</strong>. Parts with untrained variations test the model's ability to generalize.</p>
+                        <p>Identify properly assembled parts. A <strong>Good</strong> part has <strong>4 small bolts</strong> in each corner, <strong>1 screw in the center</strong>, and a <strong style="color: #fff;">Roboflow logo</strong> in the middle.</p>
                     </div>
+
                     <div class="blocks-images">
                         <div class="block-item block-item-annotated">
                             <div class="annotated-img-wrap">
@@ -2438,9 +2293,9 @@
                             </div>
                         </div>
                         <div class="block-item">
-                            <img src="images/block-ng.png" alt="No Good - missing bolts">
+                            <img src="images/block-ng.png" alt="No Good - Roboflow logo present">
                             <span class="block-label block-ng">No Good</span>
-                            <span class="block-desc">Missing bolts</span>
+                            <span class="block-desc">Roboflow Logo present</span>
                         </div>
                         <div class="block-item">
                             <img src="images/block-ng-blank.png" alt="No Good - no bolts, no screw">
@@ -2448,9 +2303,9 @@
                             <span class="block-desc">No bolts, no screw</span>
                         </div>
                         <div class="block-item">
-                            <img src="images/block-ng-roboflow.png" alt="No Good - Roboflow logo present">
+                            <img src="images/block-ng-roboflow.png" alt="No Good - missing bolts">
                             <span class="block-label block-ng">No Good</span>
-                            <span class="block-desc">Roboflow logo present</span>
+                            <span class="block-desc">Missing bolts</span>
                         </div>
                         <div class="block-item">
                             <img src="images/block-untrained.png" alt="Untrained - Roboflow logo, no bolts">
@@ -2458,8 +2313,30 @@
                             <span class="block-desc">Unseen variation</span>
                         </div>
                     </div>
+
+                    <div class="keyence-attempt">
+                        <h3><span class="attempt-keyence">Keyence Attempt</span></h3>
+                        <div class="attempt-videos">
+                            <div class="attempt-item">
+                                <video src="images/keyence-good.mov" autoplay loop muted playsinline></video>
+                                <span class="block-label block-good">Good</span>
+                                <span class="attempt-desc">Keyence identifies correctly</span>
+                            </div>
+                            <div class="attempt-item">
+                                <video src="images/keyence-ng.mov" autoplay loop muted playsinline></video>
+                                <span class="block-label block-ng">No Good</span>
+                                <span class="attempt-desc">Keyence identifies correctly</span>
+                            </div>
+                            <div class="attempt-item">
+                                <video src="images/keyence-untrained.mov" autoplay loop muted playsinline></video>
+                                <span class="block-label block-untrained">Untrained</span>
+                                <span class="attempt-desc">Keyence struggles</span>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+
         </div>
     </section>
 
@@ -2907,6 +2784,31 @@
                 const target = btn.getAttribute('data-target');
                 document.getElementById(target).classList.add('active');
             });
+        });
+
+        // Lightbox for block images
+        const lightbox = document.getElementById('lightbox');
+        const lightboxImg = document.getElementById('lightbox-img');
+        const lightboxClose = document.querySelector('.lightbox-close');
+
+        document.querySelectorAll('.blocks-layout img').forEach(img => {
+            img.style.cursor = 'pointer';
+            img.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                lightboxImg.src = img.src;
+                lightbox.classList.add('active');
+            });
+        });
+
+        lightboxClose.addEventListener('click', (e) => {
+            e.stopPropagation();
+            lightbox.classList.remove('active');
+        });
+        lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
+        lightboxImg.addEventListener('click', (e) => e.stopPropagation());
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') lightbox.classList.remove('active');
         });
 
         // Variability section button switching
