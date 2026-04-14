@@ -783,9 +783,9 @@
         /* Buttons row */
         .standoff-buttons {
             display: grid;
-            grid-template-columns: repeat(6, 1fr);
+            grid-template-columns: repeat(5, 1fr);
             gap: 1rem;
-            max-width: 1200px;
+            max-width: 1100px;
             margin: 0 auto 3rem;
         }
 
@@ -1005,6 +1005,97 @@
         @keyframes wip-pulse {
             0%, 100% { border-color: rgba(0, 212, 255, 0.25); }
             50% { border-color: rgba(0, 212, 255, 0.5); }
+        }
+
+        /* ═══════════════════════════════════════════
+           VARIABILITY SECTION
+           ═══════════════════════════════════════════ */
+        .variability {
+            position: relative;
+            z-index: 1;
+            padding: 6rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .variability-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .variability-header .section-label {
+            font-family: var(--font-mono);
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            letter-spacing: 0.3em;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+        }
+
+        .variability-header h2 {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+        }
+
+        .variability-buttons {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 3rem;
+        }
+
+        .variability-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+            padding: 1.2rem 2.5rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .variability-btn:hover {
+            border-color: var(--border-bright);
+            background: var(--bg-card-hover);
+            color: var(--text-primary);
+        }
+
+        .variability-btn.active {
+            border-color: var(--accent-purple);
+            background: rgba(124, 92, 252, 0.08);
+            color: var(--text-primary);
+            box-shadow: 0 0 25px rgba(124, 92, 252, 0.15);
+        }
+
+        .variability-icon {
+            font-size: 2rem;
+            font-family: var(--font-mono);
+            font-weight: 700;
+        }
+
+        .variability-btn.active .variability-icon {
+            color: var(--accent-purple);
+        }
+
+        .variability-label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .variability-panel {
+            display: none;
+            animation: panel-in 0.4s ease;
+        }
+
+        .variability-panel.active {
+            display: block;
         }
 
         /* ═══════════════════════════════════════════
@@ -2003,15 +2094,6 @@
                 <span class="standoff-label">Distance / Focus</span>
                 <span class="standoff-wip">Video WIP</span>
             </button>
-            <button class="standoff-btn" data-target="standoff-variability">
-                <span class="standoff-icon">&#916;</span>
-                <span class="standoff-label">Variability</span>
-                <span class="standoff-wip">Video WIP</span>
-            </button>
-            <button class="standoff-btn" data-target="standoff-blocks">
-                <span class="standoff-icon">&#9638;</span>
-                <span class="standoff-label">Blocks</span>
-            </button>
         </div>
 
         <!-- Standoff Panels -->
@@ -2209,26 +2291,25 @@
                 <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
             </div>
 
-            <div class="standoff-panel" id="standoff-variability">
-                <div class="panel-grid">
-                    <div class="panel-side loser">
-                        <div class="panel-brand">KEYENCE IV4</div>
-                        <div class="panel-verdict-tag">&#10007; LOSES</div>
-                        <div class="panel-stat">Rigid Reference Matching</div>
-                        <p>The IV4 compares against a stored reference image. Any natural variation in color, texture, positioning, or batch-to-batch differences gets flagged as a failure. Real manufacturing has variability — the IV4 doesn't understand that. You'll spend more time tuning thresholds than inspecting parts.</p>
-                    </div>
-                    <div class="panel-vs">VS</div>
-                    <div class="panel-side winner">
-                        <div class="panel-brand">ROBOFLOW AI1</div>
-                        <div class="panel-verdict-tag win">&#10003; WINS</div>
-                        <div class="panel-stat">Learns Natural Variation</div>
-                        <p>Deep learning models are trained on real-world data with natural variation baked in. Different colors, textures, slight position shifts, lighting changes — the model learns what's acceptable variation vs. a true defect. Train once with representative samples and the AI1 generalizes intelligently across production variability.</p>
-                    </div>
-                </div>
-                <div class="video-wip">&#9654; VIDEO WORK IN PROGRESS</div>
-            </div>
+        </div>
+    </section>
 
-            <div class="standoff-panel" id="standoff-blocks">
+    <!-- VARIABILITY SECTION -->
+    <section class="variability fade-up">
+        <div class="variability-header">
+            <div class="section-label">// Variability</div>
+            <h2>Real-World Test Samples</h2>
+        </div>
+
+        <div class="variability-buttons">
+            <button class="variability-btn active" data-target="var-blocks">
+                <span class="variability-icon">&#9638;</span>
+                <span class="variability-label">Blocks</span>
+            </button>
+        </div>
+
+        <div class="variability-panels">
+            <div class="variability-panel active" id="var-blocks">
                 <div class="blocks-layout">
                     <div class="blocks-images">
                         <div class="block-item">
@@ -2254,7 +2335,6 @@
                     </div>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -2699,6 +2779,17 @@
                 // Hide all panels
                 document.querySelectorAll('.standoff-panel').forEach(p => p.classList.remove('active'));
                 // Show target panel
+                const target = btn.getAttribute('data-target');
+                document.getElementById(target).classList.add('active');
+            });
+        });
+
+        // Variability section button switching
+        document.querySelectorAll('.variability-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.variability-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.variability-panel').forEach(p => p.classList.remove('active'));
                 const target = btn.getAttribute('data-target');
                 document.getElementById(target).classList.add('active');
             });
