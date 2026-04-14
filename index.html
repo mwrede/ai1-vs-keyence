@@ -1132,6 +1132,7 @@
             border-radius: 8px;
             border: 2px solid var(--border);
             background: #000;
+            filter: contrast(1.3) saturate(1.1);
         }
 
         .block-label {
@@ -1239,6 +1240,7 @@
             border-radius: 8px;
             transform: rotate(90deg);
             transform-origin: center center;
+            filter: contrast(1.3) saturate(1.1);
         }
 
         .lightbox-close {
@@ -1263,7 +1265,18 @@
         }
 
         .block-item img, .annotated-img-wrap img {
-            cursor: zoom-in;
+            cursor: pointer;
+        }
+
+        .testing-data-header {
+            font-family: var(--font-mono);
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--text-primary);
+            text-align: center;
+            margin-bottom: 1.5rem;
+            margin-top: 1rem;
         }
 
         .blocks-objective {
@@ -1300,9 +1313,6 @@
             text-align: center;
         }
 
-        .block-item img {
-            filter: brightness(1.3) contrast(1.15);
-        }
 
         /* Annotated image */
         .annotated-img-wrap {
@@ -2057,9 +2067,9 @@
     <div class="scanlines"></div>
 
     <!-- Lightbox -->
-    <div class="lightbox-overlay" id="lightbox">
-        <button class="lightbox-close">&times;</button>
-        <img id="lightbox-img" src="" alt="Enlarged view">
+    <div class="lightbox-overlay" id="lightbox" onclick="closeLightbox()">
+        <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+        <img id="lightbox-img" src="" alt="Enlarged view" onclick="event.stopPropagation()">
     </div>
 
     <!-- AUDIO -->
@@ -2157,40 +2167,6 @@
                 <div class="product-visual">
                     <img src="images/keyence.png" alt="Keyence IV4 Vision Sensor" id="keyence-img">
                 </div>
-                <ul class="specs-list">
-                    <li>
-                        <span class="spec-label">AI Capability</span>
-                        <span class="spec-value bad">Go/No-Go Only</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Model Flexibility</span>
-                        <span class="spec-value bad">Locked Ecosystem</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Setup</span>
-                        <span class="spec-value neutral">OK/NG Image Pairs</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Edge Processing</span>
-                        <span class="spec-value neutral">Built-in CPU</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Cloud Management</span>
-                        <span class="spec-value bad">None</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">OTA Updates</span>
-                        <span class="spec-value bad">Manual Only</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Active Learning</span>
-                        <span class="spec-value bad">No</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Starting Price</span>
-                        <span class="spec-value bad">~$6,100+</span>
-                    </li>
-                </ul>
             </div>
 
             <!-- VS -->
@@ -2212,40 +2188,6 @@
                 <div class="product-visual">
                     <img src="images/ai1.png" alt="Roboflow AI1 Smart Camera" id="ai1-img">
                 </div>
-                <ul class="specs-list">
-                    <li>
-                        <span class="spec-label">AI Capability</span>
-                        <span class="spec-value great">Full CV Suite</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Model Flexibility</span>
-                        <span class="spec-value good">Any Model, Any Framework</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Setup</span>
-                        <span class="spec-value good">Visual Drag & Drop</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Edge Processing</span>
-                        <span class="spec-value great">Jetson Orin NX</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Cloud Management</span>
-                        <span class="spec-value good">Full Fleet Dashboard</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">OTA Updates</span>
-                        <span class="spec-value good">Automatic</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Active Learning</span>
-                        <span class="spec-value great">Built-in Loop</span>
-                    </li>
-                    <li>
-                        <span class="spec-label">Starting Price</span>
-                        <span class="spec-value good">Contact Sales</span>
-                    </li>
-                </ul>
             </div>
         </div>
     </section>
@@ -2275,10 +2217,11 @@
                         <p>Identify properly assembled parts. A <strong>Good</strong> part has <strong>4 small bolts</strong> in each corner, <strong>1 screw in the center</strong>, and a <strong style="color: #fff;">Roboflow logo</strong> in the middle.</p>
                     </div>
 
+                    <h3 class="testing-data-header">Testing Data</h3>
                     <div class="blocks-images">
                         <div class="block-item block-item-annotated">
                             <div class="annotated-img-wrap">
-                                <img src="images/block-good.png" alt="Good - 4 bolts, 1 center screw, no logo">
+                                <img src="images/block-good.png" alt="Good - 4 bolts, 1 center screw, no logo" onclick="openLightbox(this.src)">
                                 <span class="annotation bolt-tl" title="Bolt">1</span>
                                 <span class="annotation bolt-tr" title="Bolt">2</span>
                                 <span class="annotation bolt-bl" title="Bolt">3</span>
@@ -2293,22 +2236,22 @@
                             </div>
                         </div>
                         <div class="block-item">
-                            <img src="images/block-ng.png" alt="No Good - Roboflow logo present">
+                            <img src="images/block-ng.png" alt="No Good - Roboflow logo present" onclick="openLightbox(this.src)">
                             <span class="block-label block-ng">No Good</span>
                             <span class="block-desc">Roboflow Logo present</span>
                         </div>
                         <div class="block-item">
-                            <img src="images/block-ng-blank.png" alt="No Good - no bolts, no screw">
+                            <img src="images/block-ng-blank.png" alt="No Good - no bolts, no screw" onclick="openLightbox(this.src)">
                             <span class="block-label block-ng">No Good</span>
                             <span class="block-desc">No bolts, no screw</span>
                         </div>
                         <div class="block-item">
-                            <img src="images/block-ng-roboflow.png" alt="No Good - missing bolts">
+                            <img src="images/block-ng-roboflow.png" alt="No Good - missing bolts" onclick="openLightbox(this.src)">
                             <span class="block-label block-ng">No Good</span>
                             <span class="block-desc">Missing bolts</span>
                         </div>
                         <div class="block-item">
-                            <img src="images/block-untrained.png" alt="Untrained - Roboflow logo, no bolts">
+                            <img src="images/block-untrained.png" alt="Untrained - Roboflow logo, no bolts" onclick="openLightbox(this.src)">
                             <span class="block-label block-untrained">Untrained</span>
                             <span class="block-desc">Unseen variation</span>
                         </div>
@@ -2510,6 +2453,19 @@
 
     <!-- SCROLL ANIMATIONS & AUDIO -->
     <script>
+        // Lightbox functions
+        function openLightbox(src) {
+            var lb = document.getElementById('lightbox');
+            document.getElementById('lightbox-img').src = src;
+            lb.classList.add('active');
+        }
+        function closeLightbox() {
+            document.getElementById('lightbox').classList.remove('active');
+        }
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeLightbox();
+        });
+
         const music = document.getElementById('bgMusic');
         const overlay = document.getElementById('intro-overlay');
         const audioToggle = document.getElementById('audio-toggle');
@@ -2786,30 +2742,7 @@
             });
         });
 
-        // Lightbox for block images
-        const lightbox = document.getElementById('lightbox');
-        const lightboxImg = document.getElementById('lightbox-img');
-        const lightboxClose = document.querySelector('.lightbox-close');
-
-        document.querySelectorAll('.blocks-layout img').forEach(img => {
-            img.style.cursor = 'pointer';
-            img.addEventListener('click', (e) => {
-                e.preventDefault();
-                e.stopPropagation();
-                lightboxImg.src = img.src;
-                lightbox.classList.add('active');
-            });
-        });
-
-        lightboxClose.addEventListener('click', (e) => {
-            e.stopPropagation();
-            lightbox.classList.remove('active');
-        });
-        lightbox.addEventListener('click', () => lightbox.classList.remove('active'));
-        lightboxImg.addEventListener('click', (e) => e.stopPropagation());
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') lightbox.classList.remove('active');
-        });
+        // Lightbox handled by global openLightbox() called from inline onclick
 
         // Variability section button switching
         document.querySelectorAll('.variability-btn').forEach(btn => {
