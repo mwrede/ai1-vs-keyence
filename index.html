@@ -1193,6 +1193,98 @@
             flex: 0 1 400px;
         }
 
+        .camera-selector {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .camera-selector-label {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-secondary);
+            margin-right: 0.5rem;
+        }
+
+        .camera-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4rem;
+            padding: 0.55rem 1.1rem;
+            background: var(--bg-card);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            color: var(--text-secondary);
+            font-family: var(--font-sans);
+            font-size: 0.85rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .camera-btn:hover {
+            border-color: var(--border-bright);
+            color: var(--text-primary);
+        }
+
+        .camera-btn.active {
+            border-color: var(--accent-purple);
+            background: rgba(124, 92, 252, 0.12);
+            color: var(--text-primary);
+            box-shadow: 0 0 15px rgba(124, 92, 252, 0.2);
+        }
+
+        .camera-icon {
+            font-size: 1rem;
+        }
+
+        .camera-prompt {
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--text-secondary);
+            margin-bottom: 1rem;
+        }
+
+        .camera-panel {
+            animation: panel-in 0.4s ease;
+        }
+
+        .camera-placeholder {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            padding: 4rem 2rem;
+            border: 2px dashed var(--border-bright);
+            border-radius: 12px;
+            color: var(--text-secondary);
+        }
+
+        .camera-icon-large {
+            font-size: 3rem;
+        }
+
+        .camera-placeholder p {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        @media (max-width: 768px) {
+            .camera-selector-label { width: 100%; text-align: center; margin-right: 0; }
+            .camera-btn { padding: 0.45rem 0.8rem; font-size: 0.75rem; }
+        }
+
         .attempt-videos {
             display: flex;
             gap: 1.5rem;
@@ -2246,16 +2338,45 @@
 
                     <div class="keyence-attempt roboflow-demo">
                         <h3><span class="attempt-roboflow">Roboflow AI1 Demo</span></h3>
-                        <div class="attempt-videos">
-                            <div class="attempt-item">
-                                <video src="images/roboflow-demo-good.mp4" autoplay loop muted playsinline></video>
-                                <span class="block-label block-good">Good</span>
-                                <span class="attempt-desc">Roboflow AI1 identifies Good block correctly</span>
+                        <p class="camera-prompt">Select a device to view the detection:</p>
+                        <div class="camera-selector">
+                            <button class="camera-btn" data-camera="iphone">
+                                <span class="camera-icon">&#128241;</span> iPhone
+                            </button>
+                            <button class="camera-btn" data-camera="roboflow">
+                                <span class="camera-icon">&#128247;</span> Roboflow Camera
+                            </button>
+                            <button class="camera-btn" data-camera="basler">
+                                <span class="camera-icon">&#128248;</span> Basler
+                            </button>
+                        </div>
+
+                        <div class="camera-panel" id="camera-iphone" style="display: none;">
+                            <div class="attempt-videos">
+                                <div class="attempt-item">
+                                    <video src="images/roboflow-demo-good.mp4" autoplay loop muted playsinline></video>
+                                    <span class="block-label block-good">Good</span>
+                                    <span class="attempt-desc">Roboflow AI1 identifies Good block correctly (iPhone)</span>
+                                </div>
+                                <div class="attempt-item">
+                                    <video src="images/roboflow-demo.mp4" autoplay loop muted playsinline></video>
+                                    <span class="block-label block-ng">No Good</span>
+                                    <span class="attempt-desc">Roboflow AI1 flags Roboflow logo as No Good (iPhone)</span>
+                                </div>
                             </div>
-                            <div class="attempt-item">
-                                <video src="images/roboflow-demo.mp4" autoplay loop muted playsinline></video>
-                                <span class="block-label block-ng">No Good</span>
-                                <span class="attempt-desc">Roboflow AI1 flags Roboflow logo as No Good</span>
+                        </div>
+
+                        <div class="camera-panel" id="camera-roboflow" style="display: none;">
+                            <div class="camera-placeholder">
+                                <span class="camera-icon-large">&#128247;</span>
+                                <p>Roboflow Camera demo coming soon</p>
+                            </div>
+                        </div>
+
+                        <div class="camera-panel" id="camera-basler" style="display: none;">
+                            <div class="camera-placeholder">
+                                <span class="camera-icon-large">&#128248;</span>
+                                <p>Basler demo coming soon</p>
                             </div>
                         </div>
                     </div>
@@ -2652,6 +2773,18 @@
         });
 
         // Lightbox handled by global openLightbox() called from inline onclick
+
+        // Camera selector for Roboflow Demo
+        document.querySelectorAll('.camera-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.camera-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                document.querySelectorAll('.camera-panel').forEach(p => p.style.display = 'none');
+                const cam = btn.getAttribute('data-camera');
+                const panel = document.getElementById('camera-' + cam);
+                if (panel) panel.style.display = 'block';
+            });
+        });
 
         // Variability section button switching
         document.querySelectorAll('.variability-btn').forEach(btn => {
