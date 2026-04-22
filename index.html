@@ -1180,6 +1180,19 @@
             color: #cc0000;
         }
 
+        .attempt-roboflow {
+            color: var(--accent-purple);
+        }
+
+        .roboflow-demo-video {
+            justify-content: center;
+        }
+
+        .roboflow-demo-video .attempt-item {
+            max-width: 400px;
+            flex: 0 1 400px;
+        }
+
         .attempt-videos {
             display: flex;
             gap: 1.5rem;
@@ -2072,11 +2085,6 @@
         <img id="lightbox-img" src="" alt="Enlarged view" onclick="event.stopPropagation()">
     </div>
 
-    <!-- AUDIO -->
-    <audio id="bgMusic" loop preload="auto">
-        <source src="images/chariots.mp3" type="audio/mpeg">
-    </audio>
-
     <!-- INTRO OVERLAY -->
     <div id="intro-overlay">
         <!-- Glass surface -->
@@ -2118,27 +2126,6 @@
         <!-- Flash -->
         <div id="impact-flash"></div>
     </div>
-
-    <!-- AUDIO TOGGLE -->
-    <button id="audio-toggle" style="
-        position: fixed;
-        bottom: 1.5rem;
-        right: 1.5rem;
-        z-index: 101;
-        width: 44px;
-        height: 44px;
-        border-radius: 50%;
-        border: 1px solid #2a2a4a;
-        background: rgba(10, 10, 15, 0.9);
-        backdrop-filter: blur(10px);
-        color: #8888a0;
-        font-size: 1.2rem;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        transition: all 0.3s;
-    ">&#9835;</button>
 
     <!-- NAV -->
     <nav>
@@ -2254,6 +2241,17 @@
                             <img src="images/block-untrained.png" alt="Untrained - Roboflow logo, no bolts" onclick="openLightbox(this.src)">
                             <span class="block-label block-untrained">Untrained</span>
                             <span class="block-desc">Unseen variation</span>
+                        </div>
+                    </div>
+
+                    <div class="keyence-attempt roboflow-demo">
+                        <h3><span class="attempt-roboflow">Roboflow AI1 Demo</span></h3>
+                        <div class="attempt-videos roboflow-demo-video">
+                            <div class="attempt-item">
+                                <video src="images/roboflow-demo.mp4" autoplay loop muted playsinline></video>
+                                <span class="block-label block-ng">No Good</span>
+                                <span class="attempt-desc">Roboflow AI1 identifies Roboflow logo as No Good</span>
+                            </div>
                         </div>
                     </div>
 
@@ -2466,10 +2464,7 @@
             if (e.key === 'Escape') closeLightbox();
         });
 
-        const music = document.getElementById('bgMusic');
         const overlay = document.getElementById('intro-overlay');
-        const audioToggle = document.getElementById('audio-toggle');
-        let musicPlaying = false;
         let shattered = false;
 
         // Glass shatter intro
@@ -2490,84 +2485,8 @@
 
             // 2. On impact (~500ms into swing)
             setTimeout(() => {
-                // Glass shatter sound (Web Audio API)
-                const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
-
-                // Impact thud
-                const thud = audioCtx.createOscillator();
-                const thudGain = audioCtx.createGain();
-                thud.type = 'sine';
-                thud.frequency.setValueAtTime(80, audioCtx.currentTime);
-                thud.frequency.exponentialRampToValueAtTime(20, audioCtx.currentTime + 0.2);
-                thudGain.gain.setValueAtTime(0.6, audioCtx.currentTime);
-                thudGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.3);
-                thud.connect(thudGain);
-                thudGain.connect(audioCtx.destination);
-                thud.start(audioCtx.currentTime);
-                thud.stop(audioCtx.currentTime + 0.3);
-
-                // Glass shatter noise burst
-                const bufferSize = audioCtx.sampleRate * 1.5;
-                const noiseBuffer = audioCtx.createBuffer(2, bufferSize, audioCtx.sampleRate);
-                for (let ch = 0; ch < 2; ch++) {
-                    const data = noiseBuffer.getChannelData(ch);
-                    for (let i = 0; i < bufferSize; i++) {
-                        data[i] = (Math.random() * 2 - 1) * Math.pow(1 - i / bufferSize, 2);
-                    }
-                }
-                const noise = audioCtx.createBufferSource();
-                noise.buffer = noiseBuffer;
-
-                // Highpass filter for glassy tinkle
-                const highpass = audioCtx.createBiquadFilter();
-                highpass.type = 'highpass';
-                highpass.frequency.setValueAtTime(3000, audioCtx.currentTime);
-                highpass.frequency.exponentialRampToValueAtTime(800, audioCtx.currentTime + 1.2);
-
-                // Bandpass for resonance
-                const resonance = audioCtx.createBiquadFilter();
-                resonance.type = 'bandpass';
-                resonance.frequency.setValueAtTime(5000, audioCtx.currentTime);
-                resonance.Q.setValueAtTime(5, audioCtx.currentTime);
-
-                const noiseGain = audioCtx.createGain();
-                noiseGain.gain.setValueAtTime(0.5, audioCtx.currentTime);
-                noiseGain.gain.setValueAtTime(0.5, audioCtx.currentTime + 0.05);
-                noiseGain.gain.exponentialRampToValueAtTime(0.15, audioCtx.currentTime + 0.3);
-                noiseGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 1.5);
-
-                noise.connect(highpass);
-                highpass.connect(resonance);
-                resonance.connect(noiseGain);
-                noiseGain.connect(audioCtx.destination);
-                noise.start(audioCtx.currentTime);
-
-                // High tinkle pings (glass shards)
-                for (let i = 0; i < 8; i++) {
-                    const ping = audioCtx.createOscillator();
-                    const pingGain = audioCtx.createGain();
-                    ping.type = 'sine';
-                    ping.frequency.setValueAtTime(2000 + Math.random() * 6000, audioCtx.currentTime);
-                    const delay = 0.05 + Math.random() * 0.6;
-                    pingGain.gain.setValueAtTime(0, audioCtx.currentTime);
-                    pingGain.gain.setValueAtTime(0.08 + Math.random() * 0.08, audioCtx.currentTime + delay);
-                    pingGain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + delay + 0.1 + Math.random() * 0.15);
-                    ping.connect(pingGain);
-                    pingGain.connect(audioCtx.destination);
-                    ping.start(audioCtx.currentTime + delay);
-                    ping.stop(audioCtx.currentTime + delay + 0.3);
-                }
-
                 // Flash
                 flash.classList.add('flash');
-
-                // Music disabled — click the ♫ button to play manually
-                // music.volume = 0.3;
-                // music.play().then(() => {
-                //     musicPlaying = true;
-                //     audioToggle.style.color = '#00ff88';
-                //     audioToggle.style.borderColor = 'rgba(0,255,136,0.3)';
-                // }).catch(() => {});
 
                 // Draw cracks
                 crackSvg.style.opacity = '1';
@@ -2693,21 +2612,6 @@
                 }, 600);
 
             }, 900);
-        });
-
-        // Audio toggle button
-        audioToggle.addEventListener('click', () => {
-            if (musicPlaying) {
-                music.pause();
-                musicPlaying = false;
-                audioToggle.style.color = '#555570';
-                audioToggle.style.borderColor = '#2a2a4a';
-            } else {
-                music.play();
-                musicPlaying = true;
-                audioToggle.style.color = '#00ff88';
-                audioToggle.style.borderColor = 'rgba(0,255,136,0.3)';
-            }
         });
 
         // Scroll animations
