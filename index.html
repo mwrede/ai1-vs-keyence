@@ -2340,7 +2340,7 @@
                         <h3><span class="attempt-roboflow">Roboflow Demo</span></h3>
                         <p class="camera-prompt">Select a device to view the detection:</p>
                         <div class="camera-selector">
-                            <button class="camera-btn" data-camera="iphone" onclick="selectCamera('iphone', this)">
+                            <button class="camera-btn active" data-camera="iphone" onclick="selectCamera('iphone', this)">
                                 <span class="camera-icon">&#128241;</span> iPhone
                             </button>
                             <button class="camera-btn" data-camera="roboflow" onclick="selectCamera('roboflow', this)">
@@ -2351,7 +2351,7 @@
                             </button>
                         </div>
 
-                        <div class="camera-panel" id="camera-iphone" style="display: none;">
+                        <div class="camera-panel" id="camera-iphone" style="display: block;">
                             <div class="attempt-videos">
                                 <div class="attempt-item">
                                     <video src="images/roboflow-demo-good.mp4" autoplay loop muted playsinline></video>
