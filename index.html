@@ -2293,7 +2293,7 @@
                 <div class="blocks-layout">
                     <div class="blocks-objective">
                         <h3>Objective</h3>
-                        <p>Identify good blocks. A <strong>Good</strong> block has <strong>4 small bolts</strong> in each corner, <strong>1 screw in the center</strong>, and a <strong style="color: #fff;">Roboflow logo</strong> in the middle.</p>
+                        <p>Identify good blocks. A <strong>Good</strong> block has <strong>4 small bolts</strong> in each corner, <strong>1 screw in the center</strong>, and <strong style="color: #fff;">no Roboflow logo</strong> in the middle.</p>
                     </div>
 
                     <h3 class="testing-data-header">Testing Data</h3>
@@ -2340,13 +2340,13 @@
                         <h3><span class="attempt-roboflow">Roboflow AI1 Demo</span></h3>
                         <p class="camera-prompt">Select a device to view the detection:</p>
                         <div class="camera-selector">
-                            <button class="camera-btn" data-camera="iphone">
+                            <button class="camera-btn" data-camera="iphone" onclick="selectCamera('iphone', this)">
                                 <span class="camera-icon">&#128241;</span> iPhone
                             </button>
-                            <button class="camera-btn" data-camera="roboflow">
+                            <button class="camera-btn" data-camera="roboflow" onclick="selectCamera('roboflow', this)">
                                 <span class="camera-icon">&#128247;</span> Roboflow Camera
                             </button>
-                            <button class="camera-btn" data-camera="basler">
+                            <button class="camera-btn" data-camera="basler" onclick="selectCamera('basler', this)">
                                 <span class="camera-icon">&#128248;</span> Basler
                             </button>
                         </div>
@@ -2577,6 +2577,15 @@
 
     <!-- SCROLL ANIMATIONS & AUDIO -->
     <script>
+        // Camera selector for Roboflow Demo
+        function selectCamera(cam, btn) {
+            document.querySelectorAll('.camera-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            document.querySelectorAll('.camera-panel').forEach(p => p.style.display = 'none');
+            const panel = document.getElementById('camera-' + cam);
+            if (panel) panel.style.display = 'block';
+        }
+
         // Lightbox functions
         function openLightbox(src) {
             var lb = document.getElementById('lightbox');
